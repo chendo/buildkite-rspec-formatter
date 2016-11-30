@@ -12,11 +12,12 @@ module Buildkite
       end
 
       def example_started(notification)
-        output.puts "--- #{current_indentation}#{notification.example.description}" if ENV['RSPEC_BREAK_ON_EXAMPLE']
+        output.puts "--- #{notification.example.group.full_description} #{notification.example.description}" if ENV['RSPEC_BREAK_ON_EXAMPLE']
       end
 
       def example_failed(notification)
         super
+        output.puts(notification.fully_formatted)
         output.puts("^^^ +++")
       end
     end
