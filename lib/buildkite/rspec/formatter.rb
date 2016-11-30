@@ -11,12 +11,12 @@ module Buildkite
       end
 
       def example_group_started(notification)
-        output.puts "--- #{current_indentation}#{notification.group.description}" if @group_level < @max_depth
+        output.puts "--- #{current_indentation.sub(' ', '-')}#{notification.group.description}" if @group_level < @max_depth
         super
       end
 
       def example_started(notification)
-        output.puts "--- #{notification.example.group.full_description} #{notification.example.description}" if ENV['BUILDKITE_RSPEC_BREAK_ON_EXAMPLE']
+        output.puts "--- #{current_indentation.sub(' ', '-')} #{notification.example.description}" if ENV['BUILDKITE_RSPEC_BREAK_ON_EXAMPLE']
       end
 
       def example_failed(notification)
