@@ -5,19 +5,24 @@ module Buildkite
     class Formatter < ::RSpec::Core::Formatters::DocumentationFormatter
 
       ::RSpec::Core::Formatters.register(self, :example_started, :example_group_started, :example_failed)
+      def initialize(output)
+        super
+        @max_depth = ENV.fetch('BUILDKITE_RSPEC_MAX_DEPTH', 3).to_i
+      end
 
       def example_group_started(notification)
-        output.puts "--- #{current_indentation}#{notification.group.description}"
+        output.puts "--- #{current_indentation}#{notification.group.description}" if @group_level < @max_depth
         super
       end
 
       def example_started(notification)
-        output.puts "--- #{notification.example.group.full_description} #{notification.example.description}" if ENV['RSPEC_BREAK_ON_EXAMPLE']
+        output.puts "--- #{notification.example.group.full_description} #{notification.example.description}" if ENV['BUILDKITE_RSPEC_BREAK_ON_EXAMPLE']
       end
 
       def example_failed(notification)
         super
-        output.puts(notification.fully_formatted)
+        output.puts(notification.colorized_message_lines.join("\n"))
+        output.puts(notification.colorized_formatted_backtrace.join("\n"))
         output.puts("^^^ +++")
       end
     end
