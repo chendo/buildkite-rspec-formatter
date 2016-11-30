@@ -7,13 +7,12 @@ module Buildkite
       ::RSpec::Core::Formatters.register(self, :example_started, :example_group_started, :example_failed)
 
       def example_group_started(notification)
-        output.puts "--- #{notification.group.description}"
+        output.puts "--- #{current_indentation}#{notification.group.description}"
         super
       end
 
       def example_started(notification)
-        output.puts "--- #{notification.example.description}" if ENV['RSPEC_BREAK_ON_EXAMPLE']
-        super
+        output.puts "--- #{current_indentation}#{notification.example.description}" if ENV['RSPEC_BREAK_ON_EXAMPLE']
       end
 
       def example_failed(notification)
