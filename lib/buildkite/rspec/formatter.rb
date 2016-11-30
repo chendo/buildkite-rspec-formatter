@@ -11,15 +11,16 @@ module Buildkite
       end
 
       def example_group_started(notification)
-        output.puts "--- #{'#' * @group_level} #{notification.group.description}" if @group_level < @max_depth
+        output.puts "--- #{'––' * @group_level} #{notification.group.description}" if @group_level < @max_depth
         super
       end
 
       def example_started(notification)
-        output.puts "--- #{'-' * @group_level} #{notification.example.description}" if ENV['BUILDKITE_RSPEC_BREAK_ON_EXAMPLE']
+        output.puts "--- #{'––' * @group_level} #{notification.example.description}" if ENV['BUILDKITE_RSPEC_BREAK_ON_EXAMPLE']
       end
 
       def example_failed(notification)
+        output.puts "--- #{'––' * @group_level} #{notification.example.description}"
         super
         output.puts(notification.colorized_message_lines.join("\n"))
         output.puts(notification.colorized_formatted_backtrace.join("\n"))
