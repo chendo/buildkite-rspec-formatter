@@ -11,7 +11,7 @@ module Buildkite
       end
 
       def example_group_started(notification)
-        output.puts "--- #{prefix} #{notification.group.description}" if @group_level < @max_depth
+        output.puts "--- #{prefix} #{notification.group.description}" if @group_level <= @max_depth
         super
       end
 
