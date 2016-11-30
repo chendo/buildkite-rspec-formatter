@@ -7,7 +7,7 @@ module Buildkite
       ::RSpec::Core::Formatters.register(self, :example_started, :example_group_started, :example_failed)
       def initialize(output)
         super
-        @max_depth = ENV.fetch('BUILDKITE_RSPEC_MAX_DEPTH', 3).to_i
+        @max_depth = ENV.fetch('BUILDKITE_RSPEC_MAX_DEPTH', 1).to_i
       end
 
       def example_group_started(notification)
