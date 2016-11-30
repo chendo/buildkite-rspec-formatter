@@ -20,11 +20,11 @@ module Buildkite
       end
 
       def example_failed(notification)
-        output.puts "--- #{'––' * @group_level} #{notification.example.description}"
+        output.puts "+++ #{'––' * @group_level} #{notification.example.description}"
         super
         output.puts(notification.colorized_message_lines.join("\n"))
         output.puts(notification.colorized_formatted_backtrace.join("\n"))
-        output.puts("^^^ +++")
+        output.puts "--- –––"
       end
     end
   end
