@@ -34,7 +34,7 @@ module Buildkite
         if defined?(CapybaraInlineScreenshot) && screenshot = notification.example.metadata[:screenshot]
           output.puts CapybaraInlineScreenshot.escape_code_for_image(screenshot[:image]) if screenshot[:image]
         end
-        output.puts "+++ ^^^" if @break_on_example
+        output.puts "^^^ +++" if @break_on_example
         output.puts "--- –––"
       end
 
