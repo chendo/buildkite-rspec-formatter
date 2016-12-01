@@ -1,4 +1,8 @@
 require "rspec/core/formatters/base_text_formatter"
+begin
+  require "capybara-inline-screenshot/rspec"
+rescue LoadError
+end
 
 module Buildkite
   module RSpec
@@ -30,6 +34,10 @@ module Buildkite
         super
         output.puts(notification.colorized_message_lines.join("\n"))
         output.puts(notification.colorized_formatted_backtrace.join("\n"))
+
+        if defined?(CapybaraInlineScreenshot) && screenshot = notification.example.metadata[:screenshot]
+          output.puts CapybaraInlineScreenshot.escape_code_for_image(screenshot[:image]) if screenshot[:image]
+        end
         output.puts "--- –––"
       end
     end
