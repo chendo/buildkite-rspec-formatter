@@ -11,12 +11,12 @@ module Buildkite
       ::RSpec::Core::Formatters.register(self, :example_started, :example_group_started, :example_failed)
       def initialize(output)
         super
-        @max_depth = ENV.fetch('BUILDKITE_RSPEC_MAX_DEPTH', 1).to_i
+        @max_depth = ENV.fetch('BUILDKITE_RSPEC_MAX_DEPTH', 2).to_i
         @break_on_example = !!ENV['BUILDKITE_RSPEC_BREAK_ON_EXAMPLE']
       end
 
       def example_group_started(notification)
-        output.puts "--- #{prefix} #{notification.group.description}" if @group_level <= @max_depth
+        output.puts "--- #{prefix} #{notification.group.description}" if (@group_level + 1) <= @max_depth
         super
       end
 
