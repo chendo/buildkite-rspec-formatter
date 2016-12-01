@@ -1,26 +1,37 @@
 # Buildkite RSpec Formatter
 
-Formats your tests so it's easy to grok build failures on Buildkite.
+This formatter breaks up your test suite into sections and will collapse unnecessary output and only show failures, making it easier to understand a build failure.
 
-## Installation
+Supports [capybara-inline-screenshot](https://github.com/buildkite/capybara-inline-screenshot).
+
+![Screenshot](https://cloud.githubusercontent.com/assets/2661/20782420/bee0d20e-b7df-11e6-873e-a149ca66e77d.png)
+
+This formatter makes it
+
+## Usage
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'buildkite-rspec-formatter'
+gem 'buildkite-rspec-formatter', github: 'chendo/buildkite-rspec-formatter', require: false
 ```
 
-And then execute:
+Modify your `spec_helper.rb`
 
-    $ bundle
+```ruby
+require "buildkite/rspec/formatter"
 
-Or install it yourself as:
+RSpec.configure do |config|
+  # Use the Buildkite formatter when running on Buildkite.
+  config.formatter = ENV['BUILDKITE'] ? Buildkite::RSpec::Formatter : :documentation
+end
+```
 
-    $ gem install buildkite-rspec-formatter
+## Options
 
-## Usage
+The formatter will by default only render sections 2 levels deep. You can override this by setting `BUILDKITE_RSPEC_MAX_DEPTH` to your desired depth.
 
-TODO: Write usage instructions here
+If you have long integration tests, you may want each scenario to have its own heading. You can do this by setting `BUILDKITE_RSPEC_BREAK_ON_EXAMPLE`.
 
 ## Development
 
