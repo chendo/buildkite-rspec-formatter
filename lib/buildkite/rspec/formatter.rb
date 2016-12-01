@@ -23,13 +23,8 @@ module Buildkite
         output.puts "--- #{prefix} #{notification.example.description}" if ENV['BUILDKITE_RSPEC_BREAK_ON_EXAMPLE']
       end
 
-      def prefix
-        return "" if @group_level == 0
-        "#{'  ' * [@group_level - 1, 0].max}⊢–"
-      end
-
       def example_failed(notification)
-        output.puts "+++ #{'––' * @group_level} #{notification.example.description}"
+        output.puts "+++ #{prefix} #{notification.example.description}" unless ENV['BUILDKITE_RSPEC_BREAK_ON_EXAMPLE']
         output.print "   " # Make the output line up
         super
         output.puts(notification.colorized_message_lines.join("\n"))
@@ -39,6 +34,11 @@ module Buildkite
           output.puts CapybaraInlineScreenshot.escape_code_for_image(screenshot[:image]) if screenshot[:image]
         end
         output.puts "--- –––"
+      end
+
+      private def prefix
+        return "" if @group_level == 0
+        "#{'  ' * [@group_level - 1, 0].max}⊢–"
       end
     end
   end
