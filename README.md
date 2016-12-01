@@ -6,8 +6,6 @@ Supports [capybara-inline-screenshot](https://github.com/buildkite/capybara-inli
 
 ![Screenshot](https://cloud.githubusercontent.com/assets/2661/20782420/bee0d20e-b7df-11e6-873e-a149ca66e77d.png)
 
-This formatter makes it
-
 ## Usage
 
 Add this line to your application's Gemfile:
