@@ -40,7 +40,7 @@ module Buildkite
 
       private def prefix
         return "┏━" if @group_level == 0
-        "#{'  ' * [@group_level - 1, 0].max}┣━"
+        "#{'  ' * [@group_level - 1, 0].max}┣━━"
       end
     end
   end
