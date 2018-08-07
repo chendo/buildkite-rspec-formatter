@@ -39,8 +39,12 @@ module Buildkite
       end
 
       def dump_summary(summary)
-        output.puts "+++ Summary"
-        super
+        str = summary.fully_formatted
+        unless str.strip.empty?
+          output.puts
+          output.puts "+++ Summary"
+          output.puts str
+        end
       end
 
       private def prefix
