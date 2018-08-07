@@ -16,15 +16,18 @@ module Buildkite
       end
 
       def example_group_started(notification)
+        output.puts
         output.puts "--- #{prefix} #{notification.group.description}" if (@group_level + 1) <= @max_depth
         super
       end
 
       def example_started(notification)
+        output.puts
         output.puts "--- #{prefix} #{notification.example.description}" if @break_on_example
       end
 
       def example_failed(notification)
+        output.puts
         output.puts "+++ #{prefix} #{notification.example.description}" unless @break_on_example
         output.print "   " # Make the output line up
         super
