@@ -7,8 +7,11 @@ end
 module Buildkite
   module RSpec
     class Formatter < ::RSpec::Core::Formatters::DocumentationFormatter
+      if !@registered
+        ::RSpec::Core::Formatters.register(self, :example_started, :example_group_started, :example_failed)
+        @registered = true
+      end
 
-      ::RSpec::Core::Formatters.register(self, :example_started, :example_group_started, :example_failed)
       def initialize(output)
         super
         @max_depth = ENV.fetch('BUILDKITE_RSPEC_MAX_DEPTH', 2).to_i
