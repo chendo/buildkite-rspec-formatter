@@ -45,6 +45,8 @@ module Buildkite
       end
 
       def dump_summary(summary)
+        return if summary.example_count.zero?
+
         str = summary.fully_formatted
         unless str.strip.empty?
           output.puts
