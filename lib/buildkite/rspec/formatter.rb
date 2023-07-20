@@ -60,3 +60,9 @@ module Buildkite
     end
   end
 end
+
+if defined?(KnapsackPro::Formatters::RSpecHideFailuresAndPendingExtension)
+  class Buildkite::RSpec::Formatter
+    include KnapsackPro::Formatters::RSpecHideFailuresAndPendingExtension
+  end
+end
