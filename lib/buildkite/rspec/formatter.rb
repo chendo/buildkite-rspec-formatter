@@ -48,7 +48,11 @@ module Buildkite
         str = summary.fully_formatted
         unless str.strip.empty?
           output.puts
-          output.puts "+++ Summary"
+          if summary.failure_count > 0
+            output.puts "+++ Summary"
+          else
+            output.puts "--- Summary"
+          end
           output.puts str
         end
       end
